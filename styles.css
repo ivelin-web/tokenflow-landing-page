@@ -361,7 +361,7 @@ body {
 /* Extension UI - Redesigned to match original */
 .extension-ui {
     position: absolute;
-    bottom: 2rem;
+    bottom: 1.5rem;
     right: 1rem;
     width: 140px;
     min-width: 120px;
@@ -388,11 +388,11 @@ body {
 @keyframes extensionSlideIn {
     from {
         opacity: 0;
-        transform: translateX(100px);
+        transform: translateX(20px) scale(0.8);
     }
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateX(0) scale(1);
     }
 }
 
@@ -468,7 +468,7 @@ body {
 }
 
 @keyframes fillAnimation {
-    to { width: 34.8%; }
+    to { width: 2.1%; }
 }
 
 

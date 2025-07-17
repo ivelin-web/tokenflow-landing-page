@@ -19,9 +19,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // Animate the token counter in the extension mockup
 function animateTokenCounter() {
     const tokenCountElement = document.getElementById('current-tokens');
-    const targetValue = 2847;
+    const percentageElement = document.getElementById('token-percentage');
+    const targetValue = 2700; // 2.7k
+    const targetPercentage = 2.1;
     let currentValue = 0;
+    let currentPercentage = 0;
     const increment = targetValue / 100;
+    const percentageIncrement = targetPercentage / 100;
     const duration = 2000; // 2 seconds
     const intervalTime = duration / 100;
     
@@ -29,14 +33,21 @@ function animateTokenCounter() {
     setTimeout(() => {
         const counterInterval = setInterval(() => {
             currentValue += increment;
+            currentPercentage += percentageIncrement;
             
             if (currentValue >= targetValue) {
                 currentValue = targetValue;
+                currentPercentage = targetPercentage;
                 clearInterval(counterInterval);
             }
             
-            // Format number with commas
-            tokenCountElement.textContent = Math.floor(currentValue).toLocaleString();
+            // Format number as "2.7k" style
+            const formattedValue = Math.floor(currentValue) >= 1000 ? 
+                (Math.floor(currentValue) / 1000).toFixed(1) + 'k' : 
+                Math.floor(currentValue).toString();
+            
+            tokenCountElement.textContent = formattedValue;
+            percentageElement.textContent = currentPercentage.toFixed(1) + '%';
         }, intervalTime);
     }, 1500); // Delay to sync with extension slide-in
 }
