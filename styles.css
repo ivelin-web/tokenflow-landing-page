@@ -328,7 +328,7 @@ body {
 }
 
 .chat-message.ai-message {
-    animation-delay: 0.3s;
+    transition: opacity 0.3s ease;
 }
 
 .message-content {
@@ -345,6 +345,58 @@ body {
     background: rgba(102, 126, 234, 0.1);
     border-color: rgba(102, 126, 234, 0.3);
     margin-left: 2rem;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: none;
+    margin-bottom: 1rem;
+    margin-left: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.typing-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem;
+}
+
+.typing-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    animation: typing-pulse 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-pulse {
+    0%, 60%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    30% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* Typing Cursor */
+.typing-cursor {
+    display: none;
+    animation: cursor-blink 1s infinite;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: normal;
+}
+
+@keyframes cursor-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
 }
 
 @keyframes fadeInUp {
@@ -370,15 +422,14 @@ body {
     border-radius: 12px;
     padding: 10px 12px;
     backdrop-filter: blur(20px);
-    animation: extensionSlideIn 1s ease-out 1s both;
+    opacity: 0;
+    transform: translateX(20px) scale(0.8);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(102, 126, 234, 0.2);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Display", Roboto, sans-serif;
     font-size: 12px;
     user-select: none;
-    opacity: 0.9;
     display: flex;
     flex-direction: column;
-    transform: translateZ(0);
     transition: all 0.3s ease;
     cursor: default;
     pointer-events: auto;
@@ -463,7 +514,6 @@ body {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 4px;
     width: 0%;
-    animation: fillAnimation 2s ease-out 1.5s both;
     transition: all 0.4s ease;
 }
 

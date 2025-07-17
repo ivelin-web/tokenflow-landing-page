@@ -1,7 +1,7 @@
 // TokenFlow Landing Page Interactions
 document.addEventListener('DOMContentLoaded', function() {
-    // Animated token counter
-    animateTokenCounter();
+    // Enhanced chat simulation
+    setupChatSimulation();
     
     // Button interactions
     setupButtonInteractions();
@@ -16,40 +16,129 @@ document.addEventListener('DOMContentLoaded', function() {
     setupPerformanceOptimizations();
 });
 
-// Animate the token counter in the extension mockup
-function animateTokenCounter() {
-    const tokenCountElement = document.getElementById('current-tokens');
-    const percentageElement = document.getElementById('token-percentage');
-    const targetValue = 2700; // 2.7k
-    const targetPercentage = 2.1;
-    let currentValue = 0;
-    let currentPercentage = 0;
-    const increment = targetValue / 100;
-    const percentageIncrement = targetPercentage / 100;
-    const duration = 2000; // 2 seconds
-    const intervalTime = duration / 100;
+// Enhanced chat simulation with sequential messages and streaming text
+function setupChatSimulation() {
+    const typingIndicator = document.getElementById('typing-indicator');
+    const aiMessage = document.getElementById('ai-message');
+    const aiText = document.getElementById('ai-text');
+    const typingCursor = document.getElementById('typing-cursor');
     
-    // Start animation after extension slides in
+    const aiResponse = "I'd be happy to help you create a comprehensive guide about machine learning algorithms! Let me break this down into clear sections covering all three main categories...";
+    
+    // Start the chat sequence after a delay
     setTimeout(() => {
-        const counterInterval = setInterval(() => {
-            currentValue += increment;
-            currentPercentage += percentageIncrement;
-            
-            if (currentValue >= targetValue) {
-                currentValue = targetValue;
-                currentPercentage = targetPercentage;
-                clearInterval(counterInterval);
+        startChatSequence();
+    }, 1500);
+    
+    function startChatSequence() {
+        // Show typing indicator
+        typingIndicator.style.display = 'block';
+        typingIndicator.style.opacity = '1';
+        
+        // After thinking delay, hide typing indicator and start AI response
+        setTimeout(() => {
+            typingIndicator.style.opacity = '0';
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                showAiMessage();
+            }, 300);
+        }, 1800);
+    }
+    
+    function showAiMessage() {
+        // Show AI message container
+        aiMessage.style.display = 'block';
+        aiMessage.style.opacity = '0';
+        
+        // Fade in the message container
+        setTimeout(() => {
+            aiMessage.style.opacity = '1';
+            // Start streaming text after container appears
+            setTimeout(() => {
+                streamText(aiResponse);
+            }, 200);
+        }, 100);
+    }
+    
+    function streamText(text) {
+        let currentIndex = 0;
+        const typingSpeed = 45; // milliseconds per character (faster for better effect)
+        
+        // Show typing cursor
+        typingCursor.style.display = 'inline';
+        
+        function typeCharacter() {
+            if (currentIndex < text.length) {
+                aiText.textContent = text.slice(0, currentIndex + 1);
+                currentIndex++;
+                
+                // Update token counter as we type (but only after widget appears)
+                setTimeout(() => {
+                    updateTokenCounterDuringTyping(currentIndex, text.length);
+                }, 500);
+                
+                setTimeout(typeCharacter, typingSpeed);
+            } else {
+                // Hide typing cursor when done
+                setTimeout(() => {
+                    typingCursor.style.display = 'none';
+                }, 500);
             }
+        }
+        
+        typeCharacter();
+    }
+    
+    function updateTokenCounterDuringTyping(currentIndex, totalLength) {
+        const progress = currentIndex / totalLength;
+        const targetTokens = 2700;
+        const currentTokens = Math.floor(progress * targetTokens);
+        
+        // Only update if TokenFlow widget is visible
+        const extensionUI = document.querySelector('.extension-ui');
+        const tokenCountElement = document.getElementById('current-tokens');
+        const percentageElement = document.getElementById('token-percentage');
+        
+        if (extensionUI && tokenCountElement && percentageElement && 
+            parseFloat(extensionUI.style.opacity) > 0) {
             
-            // Format number as "2.7k" style
-            const formattedValue = Math.floor(currentValue) >= 1000 ? 
-                (Math.floor(currentValue) / 1000).toFixed(1) + 'k' : 
-                Math.floor(currentValue).toString();
+            const formattedValue = currentTokens >= 1000 ? 
+                (currentTokens / 1000).toFixed(1) + 'k' : 
+                currentTokens.toString();
+            
+            const percentage = (currentTokens / 128000) * 100;
             
             tokenCountElement.textContent = formattedValue;
-            percentageElement.textContent = currentPercentage.toFixed(1) + '%';
-        }, intervalTime);
-    }, 1500); // Delay to sync with extension slide-in
+            percentageElement.textContent = Math.round(percentage) + '%';
+            
+            // Update meter fill smoothly
+            const meterFill = document.getElementById('meter-fill');
+            if (meterFill) {
+                meterFill.style.width = Math.round(percentage) + '%';
+            }
+        }
+    }
+    
+    // Start TokenFlow widget animation when AI response starts
+    setTimeout(() => {
+        animateTokenFlowWidget();
+    }, 3600); // Start when AI response begins streaming
+}
+
+// Animate the TokenFlow widget (modified timing)
+function animateTokenFlowWidget() {
+    const extensionUI = document.querySelector('.extension-ui');
+    if (extensionUI) {
+        extensionUI.style.opacity = '1';
+        extensionUI.style.transform = 'translateX(0) scale(1)';
+        extensionUI.style.transition = 'all 1s ease-out';
+    }
+}
+
+// Legacy token counter function (now handled by streaming text)
+function animateTokenCounter() {
+    // This function is now handled by the streaming text effect
+    // Token counter updates dynamically as text streams
 }
 
 // Setup button interactions and click handlers

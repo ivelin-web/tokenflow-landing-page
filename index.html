@@ -100,9 +100,21 @@
                                     Can you help me write a comprehensive guide about machine learning algorithms? I need it to cover supervised learning, unsupervised learning, and reinforcement learning with examples.
                                 </div>
                             </div>
-                            <div class="chat-message ai-message">
+                            
+                            <!-- Typing Indicator -->
+                            <div class="typing-indicator" id="typing-indicator">
+                                <div class="typing-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            
+                            <!-- AI Message (initially hidden) -->
+                            <div class="chat-message ai-message" id="ai-message" style="display: none;">
                                 <div class="message-content">
-                                    I'd be happy to help you create a comprehensive guide about machine learning algorithms! Let me break this down into clear sections covering all three main categories...
+                                    <span id="ai-text"></span>
+                                    <span class="typing-cursor" id="typing-cursor">|</span>
                                 </div>
                             </div>
                         </div>
