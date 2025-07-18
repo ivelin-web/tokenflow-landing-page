@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Typing effect for hero title
     setupTypingEffect();
     
+    // Generate stars background
+    generateStars();
+    
     // Smooth scroll and performance optimizations
     setupPerformanceOptimizations();
 });
@@ -380,6 +383,39 @@ function showNotification(message, type = 'info') {
         notification.style.transform = 'translateX(100%)';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
+}
+
+// Generate subtle stars background
+function generateStars() {
+    const starsContainer = document.querySelector('.stars-container');
+    const starCount = 18;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Small size back to original
+        const size = Math.random() * 2 + 1; // 1px to 3px
+        
+        // Random animation delay and duration
+        const delay = Math.random() * 4;
+        const duration = Math.random() * 2 + 2.5; // 2.5-4.5 seconds
+        
+        star.style.cssText = `
+            left: ${x}%;
+            top: ${y}%;
+            width: ${size}px;
+            height: ${size}px;
+            animation-delay: ${delay}s;
+            animation-duration: ${duration}s;
+        `;
+        
+        starsContainer.appendChild(star);
+    }
 }
 
 // Add CSS for focus visibility
