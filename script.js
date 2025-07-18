@@ -34,13 +34,21 @@ function setupChatSimulation() {
     }, 1500);
     
     function startChatSequence() {
-        // Show typing indicator
+        // Show typing indicator with smooth transition
         typingIndicator.style.display = 'block';
-        typingIndicator.style.opacity = '1';
+        typingIndicator.style.opacity = '0';
+        typingIndicator.style.transition = 'opacity 0.3s ease';
+        
+        // Fade in typing indicator
+        setTimeout(() => {
+            typingIndicator.style.opacity = '1';
+        }, 50);
         
         // After thinking delay, hide typing indicator and start AI response
         setTimeout(() => {
             typingIndicator.style.opacity = '0';
+            
+            // Wait for fade out, then hide and show AI message
             setTimeout(() => {
                 typingIndicator.style.display = 'none';
                 showAiMessage();
@@ -49,18 +57,20 @@ function setupChatSimulation() {
     }
     
     function showAiMessage() {
-        // Show AI message container
+        // Show AI message container with smooth transition
         aiMessage.style.display = 'block';
         aiMessage.style.opacity = '0';
+        aiMessage.style.transition = 'opacity 0.4s ease';
         
-        // Fade in the message container
+        // Fade in the message container smoothly
         setTimeout(() => {
             aiMessage.style.opacity = '1';
-            // Start streaming text after container appears
-            setTimeout(() => {
-                streamText(aiResponse);
-            }, 200);
-        }, 100);
+        }, 50);
+        
+        // Start streaming text after container fade-in is complete
+        setTimeout(() => {
+            streamText(aiResponse);
+        }, 450); // Wait for transition to complete
     }
     
     function streamText(text) {
@@ -132,9 +142,16 @@ function setupChatSimulation() {
 function animateTokenFlowWidget() {
     const extensionUI = document.querySelector('.extension-ui');
     if (extensionUI) {
-        extensionUI.style.opacity = '1';
-        extensionUI.style.transform = 'translateX(0) scale(1)';
+        // Set initial state and transition
         extensionUI.style.transition = 'all 1s ease-out';
+        extensionUI.style.opacity = '0';
+        extensionUI.style.transform = 'translateX(20px) scale(0.95)';
+        
+        // Animate to final state after a brief delay
+        setTimeout(() => {
+            extensionUI.style.opacity = '1';
+            extensionUI.style.transform = 'translateX(0) scale(1)';
+        }, 100);
     }
 }
 
@@ -215,12 +232,10 @@ function setupParallaxEffects() {
     const orbs = document.querySelectorAll('.gradient-orb');
     let mouseX = 0;
     let mouseY = 0;
-    let isMoving = false;
     
     document.addEventListener('mousemove', throttle((e) => {
         mouseX = (e.clientX / window.innerWidth) - 0.5;
         mouseY = (e.clientY / window.innerHeight) - 0.5;
-        isMoving = true;
         
         orbs.forEach((orb, index) => {
             const speed = (index + 1) * 0.3;
@@ -229,11 +244,6 @@ function setupParallaxEffects() {
             
             orb.style.transform = `translate(${x}px, ${y}px) scale(${1 + Math.abs(mouseX) * 0.1})`;
         });
-        
-        // Reset moving flag after a delay
-        setTimeout(() => {
-            isMoving = false;
-        }, 100);
     }, 16)); // ~60fps
     
     // Add keyboard navigation support
@@ -252,27 +262,42 @@ function setupParallaxEffects() {
 // Setup typing effect for hero title
 function setupTypingEffect() {
     const heroTitle = document.querySelector('.hero-title');
-    const titleText = heroTitle.innerHTML;
-    let isTypingComplete = false;
     
     // Only run typing effect on larger screens and if user hasn't scrolled
     if (window.innerWidth > 768 && !sessionStorage.getItem('typingShown')) {
+        // Split text into two parts
+        const firstLine = 'Monitor AI Token Usage';
+        const secondLine = 'in Real-Time';
+        
+        // Clear content and start typing immediately
         heroTitle.innerHTML = '';
         heroTitle.style.borderRight = '2px solid #667eea';
         
         let currentIndex = 0;
         const typeSpeed = 50;
+        let typingSecondLine = false;
         
         function typeCharacter() {
-            if (currentIndex < titleText.length) {
-                heroTitle.innerHTML = titleText.slice(0, currentIndex + 1);
+            if (!typingSecondLine && currentIndex < firstLine.length) {
+                // Typing first line
+                heroTitle.innerHTML = firstLine.slice(0, currentIndex + 1);
+                currentIndex++;
+                setTimeout(typeCharacter, typeSpeed);
+            } else if (!typingSecondLine && currentIndex === firstLine.length) {
+                // Finished first line, start second line
+                heroTitle.innerHTML = firstLine + '<br><span class="gradient-text"></span>';
+                typingSecondLine = true;
+                currentIndex = 0;
+                setTimeout(typeCharacter, typeSpeed);
+            } else if (typingSecondLine && currentIndex < secondLine.length) {
+                // Typing second line
+                heroTitle.innerHTML = firstLine + '<br><span class="gradient-text">' + secondLine.slice(0, currentIndex + 1) + '</span>';
                 currentIndex++;
                 setTimeout(typeCharacter, typeSpeed);
             } else {
-                // Remove cursor after typing is complete
+                // Finished typing
                 setTimeout(() => {
                     heroTitle.style.borderRight = 'none';
-                    isTypingComplete = true;
                 }, 500);
                 
                 // Mark as shown so it doesn't repeat
@@ -280,11 +305,12 @@ function setupTypingEffect() {
             }
         }
         
-        // Start typing after a short delay
-        setTimeout(typeCharacter, 800);
+        // Start typing immediately
+        typeCharacter();
     } else {
         // Show title immediately if typing effect is skipped
-        isTypingComplete = true;
+        // Ensure proper HTML structure is maintained
+        heroTitle.innerHTML = 'Monitor AI Token Usage<br><span class="gradient-text">in Real-Time</span>';
     }
 }
 
