@@ -891,6 +891,12 @@ body {
     .btn-demo {
         display: inline-flex;
     }
+    
+    /* Force feature pills to column layout */
+    .feature-pills {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 @media (max-width: 480px) {
