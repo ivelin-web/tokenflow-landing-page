@@ -775,20 +775,37 @@ body {
     }
     
     .modal-mockup .browser-content {
-        height: 360px;
+        height: 380px;
         padding: 0.75rem;
     }
     
     .modal-mockup .chat-message .message-content {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         padding: 0.75rem;
     }
     
     .modal-mockup .extension-ui {
-        transform: scale(0.85);
+        transform: scale(0.75);
         right: 0.5rem;
         bottom: 0.75rem;
         opacity: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .modal-mockup .browser-content {
+        height: 400px;
+    }
+    
+    .modal-mockup .extension-ui {
+        transform: scale(0.7);
+        right: 0.3rem;
+        bottom: 1rem;
+    }
+    
+    .modal-mockup .chat-message .message-content {
+        font-size: 0.75rem;
+        line-height: 1.4;
     }
 }
 
