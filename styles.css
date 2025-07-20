@@ -610,6 +610,188 @@ body {
     to { width: 2.1%; }
 }
 
+/* Demo Button Styles */
+.btn-demo {
+    display: none;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.btn-demo:hover {
+    background: linear-gradient(135deg, #5a6fd8, #6a4190);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Demo Modal Styles */
+.demo-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.demo-modal.active {
+    display: flex;
+}
+
+.demo-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.demo-modal-content {
+    position: relative;
+    background: #1a1a1a;
+    border-radius: 16px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.demo-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.demo-modal-header h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.demo-modal-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.demo-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.demo-modal-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.demo-modal-body {
+    padding: 1.5rem;
+}
+
+.modal-mockup {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.modal-mockup .browser-content {
+    height: 500px;
+    padding: 1.5rem;
+}
+
+.modal-mockup .extension-ui {
+    transform: none;
+    scale: 1;
+    opacity: 0;
+}
+
+.modal-mockup #modal-typing-indicator {
+    display: block;
+    opacity: 0;
+}
+
+/* Modal responsive adjustments */
+@media (max-width: 600px) {
+    .demo-modal-content {
+        max-width: 95vw;
+        max-height: 90vh;
+        margin: 0;
+    }
+    
+    .demo-modal-header {
+        padding: 1rem;
+    }
+    
+    .demo-modal-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .demo-modal-body {
+        padding: 1rem;
+    }
+    
+    .modal-mockup .browser-content {
+        height: 420px;
+        padding: 1rem;
+    }
+    
+    .modal-mockup .extension-ui {
+        transform: scale(0.9);
+        right: 0.5rem;
+        bottom: 1rem;
+        opacity: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .demo-modal-content {
+        max-width: 98vw;
+        max-height: 85vh;
+        border-radius: 12px;
+    }
+    
+    .demo-modal-header {
+        padding: 0.75rem;
+    }
+    
+    .demo-modal-body {
+        padding: 0.75rem;
+    }
+    
+    .modal-mockup .browser-content {
+        height: 360px;
+        padding: 0.75rem;
+    }
+    
+    .modal-mockup .chat-message .message-content {
+        font-size: 0.85rem;
+        padding: 0.75rem;
+    }
+    
+    .modal-mockup .extension-ui {
+        transform: scale(0.85);
+        right: 0.5rem;
+        bottom: 0.75rem;
+        opacity: 0;
+    }
+}
+
 
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 1199px) {
@@ -679,6 +861,18 @@ body {
 
     .extension-ui {
         transform: scale(0.9);
+    }
+}
+
+@media (max-width: 600px) {
+    /* Hide mockup container on small screens */
+    .mockup-container {
+        display: none;
+    }
+    
+    /* Show demo button on small screens */
+    .btn-demo {
+        display: inline-flex;
     }
 }
 

@@ -76,6 +76,13 @@
                         </svg>
                         View Source
                     </a>
+                    <!-- Demo Button for Mobile -->
+                    <button class="btn btn-demo" id="demo-btn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        See Demo
+                    </button>
                 </div>
             </div>
 
@@ -148,6 +155,86 @@
         </div>
     </main>
 
+    <!-- Demo Modal -->
+    <div class="demo-modal" id="demo-modal">
+        <div class="demo-modal-overlay" id="demo-modal-overlay"></div>
+        <div class="demo-modal-content">
+            <div class="demo-modal-header">
+                <h3>TokenFlow Extension Demo</h3>
+                <button class="demo-modal-close" id="demo-modal-close">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="demo-modal-body">
+                <!-- Copy of the browser mockup for modal -->
+                <div class="browser-mockup modal-mockup">
+                    <!-- Browser Header -->
+                    <div class="browser-header">
+                        <div class="browser-controls">
+                            <div class="control red"></div>
+                            <div class="control yellow"></div>
+                            <div class="control green"></div>
+                        </div>
+                        <div class="browser-url">chatgpt.com</div>
+                    </div>
+                    
+                    <!-- Browser Content -->
+                    <div class="browser-content">
+                        <!-- Chat Interface Mockup -->
+                        <div class="chat-container">
+                            <div class="chat-message user-message">
+                                <div class="message-content">
+                                    Can you help me write a comprehensive guide about machine learning algorithms? I need it to cover supervised learning, unsupervised learning, and reinforcement learning with examples.
+                                </div>
+                            </div>
+                            
+                            <!-- Typing Indicator for Modal -->
+                            <div class="typing-indicator" id="modal-typing-indicator">
+                                <div class="typing-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            
+                            <!-- AI Message (initially hidden) -->
+                            <div class="chat-message ai-message" id="modal-ai-message" style="display: none;">
+                                <div class="message-content">
+                                    <span id="modal-ai-text"></span>
+                                    <span class="typing-cursor" id="modal-typing-cursor">|</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TokenFlow Extension UI -->
+                    <div class="extension-ui" id="modal-extension-ui">
+                        <div class="extension-header">
+                            <div class="extension-logo">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span class="extension-title">TokenFlow</span>
+                        </div>
+                        
+                        <div class="token-stats">
+                            <div class="token-counts">
+                                ≈ <span id="modal-current-tokens">0</span> / <span id="modal-total-tokens">128.0k</span>
+                            </div>
+                            <div class="token-percentage" id="modal-token-percentage">0%</div>
+                        </div>
+                        
+                        <div class="meter-bar">
+                            <div class="meter-fill" id="modal-meter-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
