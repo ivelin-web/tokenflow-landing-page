@@ -265,14 +265,16 @@ body {
 
 /* Feature Pills */
 .feature-pills {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    flex-wrap: wrap;
+    max-width: 400px;
 }
 
 .pill {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     background: rgba(102, 126, 234, 0.1);
     border: 1px solid rgba(102, 126, 234, 0.3);
@@ -335,9 +337,14 @@ body {
     transform: translateY(-2px);
 }
 
+#demo-link {
+    display: none;
+}
+
 .btn-icon {
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
 }
 
 /* Mockup Container */
@@ -610,66 +617,6 @@ body {
     to { width: 2.1%; }
 }
 
-/* Demo Button Styles */
-.demo-link {
-    display: none;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 1rem auto 1.5rem;
-    padding: 0.75rem 1.5rem;
-    background: transparent;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    width: fit-content;
-    position: relative;
-    z-index: 1;
-}
-
-.demo-link::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: inherit;
-    z-index: -2;
-}
-
-.demo-link::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: #0A0A0A;
-    border-radius: inherit;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-}
-
-.demo-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-}
-
-.demo-link:hover::after {
-    opacity: 0;
-}
-
-.demo-icon {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.3s ease;
-    fill: currentColor;
-}
-
-.demo-link:hover .demo-icon {
-    transform: scale(1.1);
-}
-
 /* Demo Modal Styles */
 .demo-modal {
     position: fixed;
@@ -862,11 +809,13 @@ body {
     .main-content {
         padding: 4rem 3rem;
         align-items: flex-start;
+        min-height: 0;
     }
 
     .hero-section {
-        grid-template-columns: 1fr;
-        gap: 2rem; /* Adjusted gap for mobile */
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
         text-align: center;
         width: 100%;
     }
@@ -880,8 +829,11 @@ body {
     /* Then, we can order all direct items of .hero-section */
     .hero-title { order: 1; }
     .hero-subtitle { order: 2; margin: 0 auto; }
-    .mockup-container { order: 3; margin-top: 1.5rem; } /* Add margin-top for spacing */
-    .feature-pills { order: 4; justify-content: center; margin-top: 1.5rem; }
+    .mockup-container { order: 3; }
+    .feature-pills {
+        order: 4;
+        margin: 0 auto;
+    }
     .cta-buttons { order: 5; justify-content: center; }
 
 
@@ -911,6 +863,10 @@ body {
         gap: 0.75rem;
         width: 100%;
     }
+
+    .secondary-buttons {
+        display: contents;
+    }
     
     .btn {
         width: 100%;
@@ -934,16 +890,18 @@ body {
         display: none;
     }
     
-    /* Show demo link on small screens */
-    .demo-link {
-        display: flex;
-        justify-content: center;
+    #demo-link {
+        display: inline-flex;
     }
-    
-    /* Force feature pills to column layout */
+
+    .hero-section {
+        justify-content: space-around;
+        min-height: calc(100vh - 160px);
+        gap: 1.5rem;
+    }
+
     .feature-pills {
-        flex-direction: column;
-        align-items: center;
+        gap: 0.75rem;
     }
 }
 
@@ -961,8 +919,7 @@ body {
     }
     
     .feature-pills {
-        flex-direction: column;
-        align-items: center;
+        max-width: 100%;
     }
     
     .browser-content {
