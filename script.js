@@ -647,7 +647,7 @@ function setupModalChatSimulation() {
 
 // Demo Modal functionality
 function setupDemoModal() {
-    const demoBtn = document.getElementById('demo-btn');
+    const demoBtn = document.getElementById('demo-link');
     const demoModal = document.getElementById('demo-modal');
     const demoModalClose = document.getElementById('demo-modal-close');
     const demoModalOverlay = document.getElementById('demo-modal-overlay');
